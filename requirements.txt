@@ -1,0 +1,10 @@
+#used by stock-market/api.py
+
+fastapi
+uvicorn[standard]
+yfinance
+pandas
+numpy
+requests
+aiohttp
+pydantic
