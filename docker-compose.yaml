@@ -147,6 +147,23 @@ services:
     environment:
       PYTHONUNBUFFERED: "1"
 
+  api-producer:
+    image: python:3.9-slim
+    volumes:
+      - ./producers:/app
+    working_dir: /app
+    command: bash -lc "pip3 install -r requirements.txt && python api_producer.py"
+    depends_on:
+      - Python-API
+      - kafka
+    restart: unless-stopped
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: "kafka:9095"
+      KAFKA_TOPIC: "financial-data"
+      API_URL: "http://python-api:8000/all"
+      POLL_INTERVAL: "10"
+      API_TIMEOUT: "3600"
+
   kafka:
     image: bitnami/kafka:latest
     ports:
